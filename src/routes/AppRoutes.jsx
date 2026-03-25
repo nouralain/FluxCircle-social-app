@@ -9,8 +9,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import ProtectedAuthRoute from "./ProtectedAuthRoute";
 import ForgetPassword from './../pages/forgetPass/ForgetPassword';
 import Profile from './../pages/profile/Profile';
-import Notification from "../pages/notification/notification";
 import PostDetails from "../pages/postDetails/PostDetails";
+import Notification from './../pages/notification/Notification';
 
 export const router = createBrowserRouter([
   {
