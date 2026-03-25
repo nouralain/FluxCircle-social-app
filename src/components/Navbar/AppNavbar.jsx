@@ -36,6 +36,7 @@ const {data} = useQuery({
   queryKey:["profile-data"],
   queryFn: profileData,
   select: (res) => res.data.data.user,
+  enabled: !!userToken
 })
 
   return (
@@ -78,7 +79,7 @@ const {data} = useQuery({
         )}
 
         {/*2 account btns  */}
-        <NavbarContent
+        {userToken &&  <NavbarContent
           justify="center"
           className="gap-0  bg-graay-200 rounded-xl border border-gray-200 px-2"
         >
@@ -138,7 +139,8 @@ const {data} = useQuery({
              
             </NavLink>
           </NavbarItem>
-        </NavbarContent>
+        </NavbarContent>}
+       
 
         {/*3 SIGN UP AND SIGN IN BUTTONS */}
         {userToken ? (
