@@ -1,24 +1,19 @@
 import { Button, Form, Input } from "@heroui/react";
 import { useForm } from "react-hook-form";
-import { sendUserData } from "../../../services/axios";
-import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import loginBg from "../../../assets/boliviainteligente-46MZbf_9P5I-unsplash.jpg";
 import { GiHolosphere } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
+import { zodLoginFormScheme } from "../../../schemes/loginSchema";
+import { authContext } from "../../../contexts/AuthContext";
+import { NavLink } from "react-router-dom";
+import { login } from "../../../api/auth.api";
 
 
-const zodFormScheme = zod.object({
-  email: zod.email("Email is required"),
-  password: zod
-    .string()
-    .nonempty("Password is required")
-    .min(8, "Password too short"),
-});
+
 
 export default function Login() {
   const {
@@ -32,44 +27,35 @@ export default function Login() {
       password: "",
     },
     mode: "all",
-    resolver: zodResolver(zodFormScheme),
+    resolver: zodResolver(zodLoginFormScheme),
   });
 
   const [loading, setLoading] = useState(false);
-  const homeNavigate = useNavigate();
+
+  const {setUserToken} =useContext(authContext)
   async function userLogIn(x) {
+
     setLoading(true);
     toast.promise(
-      sendUserData(x, "/users/signin"),
+     login(x),
       {
         loading: "Saving...",
         success: (response) => {
           setLoading(false);
-          setTimeout(() => {
-            homeNavigate("/posts");
-          }, 2000);
+          localStorage.setItem("token" , response.data.data.token)
+setUserToken(response.data.data.token)
+
           return response.data.message;
         },
         error: (response) => {
           setLoading(false);
 
-          return response.response.data.error;
+          return response.response.data.errors;
         },
       },
       { duration: 2000 },
     );
-    // try {
-
-    //   const response = await ;
-    //   console.log(response.data,x);
-    //   setLoading(false)
-    //   toast.success(response.data.message)
-
-    // } catch (error) {
-    //
-    //   console.log(error.response?.data);
-    //   toast.error(error.response.data.error)
-    // }
+   
   }
 
   return (
@@ -99,7 +85,9 @@ export default function Login() {
 
         <Form
           onSubmit={handleSubmit(userLogIn)}
-          className=" relative z-20  bg-white  -mt-7 w-full shadow-[0_1px_40px_rgba(0,0,0,1)] lg:shadow-none px-15 md:px-30 lg:px-0  rounded-4xl lg:rounded-none  min-h-screen lg:max-w-xl mx-auto flex flex-col  gap-7 items-center justify-center  "
+          className=" relative z-20   bg-white lg:bg-transparent -mt-7 lg:mt-0 w-full shadow-[0_1px_40px_rgba(0,0,0,1)]
+           lg:shadow-none px-15 md:px-30 lg:px-0  rounded-4xl lg:rounded-none  min-h-screen
+            lg:max-w-xl mx-auto flex flex-col  gap-7 items-center justify-center  "
         >
           <div className="text-center">
             <h1 className="font-bold text-3xl self-center  text-black">
@@ -130,7 +118,7 @@ export default function Login() {
             type="password"
             classNames={{ label: "text-black! text-lg font-semibold" }}
           />
-          <p className="self-end text-blue-700 hover:underline hover:cursor-pointer">Forgot password?</p>
+          <NavLink className="self-end text-blue-700 hover:underline hover:cursor-pointer">Forgot password?</NavLink>
 
           <div className="flex gap-4 w-full">
             <Button
@@ -177,7 +165,7 @@ export default function Login() {
               Apple
             </Button>
           </div>
-          <p className="text-gray-500">Don't have an account? <span className=" text-blue-700 hover:underline hover:cursor-pointer">Sign up</span></p>
+          <p className="text-gray-500">Don't have an account? <NavLink to={"/register"} className=" text-blue-700 hover:underline hover:cursor-pointer">Sign up</NavLink></p>
         </Form>
       </div>
     </>

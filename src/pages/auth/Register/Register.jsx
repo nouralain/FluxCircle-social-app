@@ -1,49 +1,21 @@
 import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
 import { useForm } from "react-hook-form";
-import { sendUserData } from "../../../services/axios";
-import * as zod from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import regBg from "../../../assets/boliviainteligente-46MZbf_9P5I-unsplash.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
+import { zodFormScheme } from "../../../schemes/registerSchema";
+import { authContext } from "../../../contexts/AuthContext";
+import { resgister } from "../../../api/auth.api";
 
-const zodFormScheme = zod
-  .object({
-    name: zod
-      .string()
-      .nonempty("Name is required")
-      .min(3, "Name must be at least 3 characters")
-      .max(20, "Name mut be less that 20 characters"),
-    email: zod.email("Email is required"),
-    password: zod
-      .string()
-      .nonempty("Password is required")
-      .regex(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-        "Waek password",
-      ),
-    rePassword: zod.string().nonempty("confirm password is required"),
-    dateOfBirth: zod.coerce
-      .date()
-      .refine((value) => {
-        return new Date().getFullYear() - value.getFullYear() >= 18;
-      }, "Age must be more than 17 years")
-      .transform((valueBeforeTransform) =>
-        valueBeforeTransform.toLocaleDateString("sv-SE"),
-      ),
-    gender: zod.enum(["male", "female"], "Gender is required"),
-  })
-  .refine(
-    ({ password, rePassword }) => {
-      return password === rePassword;
-    },
-    { path: "rePassword", error: "Repassword does not match password" },
-  );
+
 
 export default function Register() {
+
+  // react hook form
   const {
     handleSubmit,
     register,
@@ -62,41 +34,36 @@ export default function Register() {
     resolver: zodResolver(zodFormScheme),
   });
 
+  // submit button loading
   const [loading, setLoading] = useState(false);
-  const logInNavigate = useNavigate();
+
+
+  // token context 
+ const {setUserToken}= useContext(authContext)
+
+  //send user data 
   async function userRegister(x) {
     setLoading(true);
     toast.promise(
-      sendUserData(x, "/users/signup"),
+     resgister(x),
       {
+        
         loading: "Saving...",
         success: (response) => {
           setLoading(false);
-          setTimeout(() => {
-            logInNavigate("/login");
-          }, 2000);
+          setUserToken(response.data.data.token)
+          localStorage.setItem("token",response.data.data.token)
+          
           return response.data.message;
         },
         error: (response) => {
           setLoading(false);
 
-          return response.response.data.error;
+          return response.response.data.errors;
         },
       },
       { duration: 2000 },
     );
-    // try {
-
-    //   const response = await ;
-    //   console.log(response.data,x);
-    //   setLoading(false)
-    //   toast.success(response.data.message)
-
-    // } catch (error) {
-    //
-    //   console.log(error.response?.data);
-    //   toast.error(error.response.data.error)
-    // }
   }
 
   return (

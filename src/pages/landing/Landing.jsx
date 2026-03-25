@@ -1,12 +1,13 @@
 import React from "react";
-import MyButton from "./../../components/UI/Button";
-import GradientCircle from "../../components/UI/GradientCircle";
-import MobileScreen from "../../components/UI/MobileScreen";
-import InfoCard from "../../components/UI/InfoCard";
-import Icon from "./../../components/UI/icon";
+import MyButton from "../../components/Shared/Button";
+import GradientCircle from "../../components/Shared/GradientCircle";
+import MobileScreen from "../../components/Shared/MobileScreen";
+import InfoCard from "../../components/Shared/InfoCard";
+import Icon from "../../components/Shared/icon";
 import { IoCameraOutline } from "react-icons/io5";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { TbUsers } from "react-icons/tb";
+import Footer from './../../components/Footer/Footer';
 
 export default function Landing() {
   const infoCards = [
@@ -135,9 +136,10 @@ export default function Landing() {
             social life simple and genuine.
           </p>
           <div className="grid grid-cols-12 gap-5">
-            {infoCards.map((card) => (
-              <div className="col-span-12 md:col-span-6  lg:col-span-4 ">
+            {infoCards.map((card,index) => (
+              <div key={index} className="col-span-12 md:col-span-6  lg:col-span-4 ">
                 <InfoCard
+
                   icon={card.icon}
                   header={card.headers}
                   paragraph={card.paragraph}
@@ -171,15 +173,15 @@ export default function Landing() {
           <div className="p-2 border mb-4 border-gray-300 rounded-2xl flex items-center gap-4">
             <div className="ms-4 size-2 rounded-full bg-[#6054EC]"></div>
             <div>
-              <h4 className="text-sm font-semibold">No ads</h4>
-            <span className="text-xs text-[#5e617a]">Ever</span>
+              <h4 className="text-sm font-semibold">Real people</h4>
+            <span className="text-xs text-[#5e617a]">Always </span>
             </div>
           </div>
           <div className="p-2 border mb-4 border-gray-300 rounded-2xl flex items-center gap-4">
             <div className="ms-4 size-2 rounded-full bg-[#6054EC]"></div>
             <div>
-              <h4 className="text-sm font-semibold">No ads</h4>
-            <span className="text-xs text-[#5e617a]">Ever</span>
+              <h4 className="text-sm font-semibold">Data</h4>
+            <span className="text-xs text-[#5e617a]">Yours only</span>
             </div>
           </div>
           </div>
@@ -198,6 +200,8 @@ export default function Landing() {
             </div>
         </div>
       </section>
+
+       <Footer />
     </>
   );
 }

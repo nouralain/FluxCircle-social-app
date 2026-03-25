@@ -1,5 +1,10 @@
-# SocialApp 📱
+# FluxCircle 📱
 A modern social media application built with React.js, focusing on performance, form validation, and efficient data fetching.
+
+## 🌐 Live Demo
+[View Live](https://your-deploy-link.com)
+
+---
 
 ## 🚀 Tech Stack
 * **Framework:** [React.js](https://reactjs.org/)
@@ -10,7 +15,31 @@ A modern social media application built with React.js, focusing on performance, 
 * **HTTP Client:** [Axios](https://axios-http.com/)
 * **Icons:** [React Icons](https://react-icons.github.io/react-icons/)
 * **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+* **UI Components:** [HeroUI](https://heroui.com/)
 * **Notifications:** [react-hot-toast](https://react-hot-toast.com/)
+
+---
+
+## ✨ Features
+- [x] User Authentication (Login / Register)
+- [x] Protected Routes
+- [x] Landing Page
+- [x] Create / View Posts
+- [x] Like & Comment on Posts
+- [x] Comment Pagination (Load More)
+- [x] Post Details Page
+- [x] Feed / Community / My Posts / Saved tabs
+- [x] Bookmarks / Saved Posts
+- [x] User Profile Page
+- [x] Change Password
+- [x] Responsive Design
+
+---
+
+## 📸 Screenshots
+
+
+---
 
 ## Auth Flow
 
@@ -21,20 +50,11 @@ A modern social media application built with React.js, focusing on performance, 
 
 ---
 
-## ✨ Key Features
-- [x] User Authentication (Login / Register)
-- [x] Protected Routes
-- [x] Create / View Posts
-- [x] Like & Comment on Posts
-- [x] User Profile Page
-- [x] Responsive Design
-
 ## Installation
-
 ```bash
 # 1. Clone the repo
 git clone https://github.com/nouralain/FluxCircle-social-app.git
-cd social-app
+cd FluxCircle-social-app
 
 # 2. Install dependencies
 npm install
@@ -51,7 +71,6 @@ npm run dev
 ## Environment Variables
 
 Create a `.env` file in the root:
-
 ```env
 VITE_API_BASE_URL=https://linked-posts.routemisr.com
 ```
@@ -59,46 +78,70 @@ VITE_API_BASE_URL=https://linked-posts.routemisr.com
 ---
 
 ## Project Structure
-
 ```
 src/
 ├── api/                  # Axios instance & API functions
-│   ├── axiosInstance.js
 │   ├── auth.api.js
-│   └── posts.api.js
+│   └── axios.js
+│
+├── assets/
 │
 ├── components/           # Reusable UI components
-│   ├── common/
+│   ├── Shared/
+│   │   ├── postsQueries/
+│   │   │   ├── Community.jsx
+│   │   │   ├── Feed.jsx
+│   │   │   ├── MyPosts.jsx
+│   │   │   └── Saved.jsx
+│   │   ├── AllComments.jsx
 │   │   ├── Button.jsx
-│   │   ├── Input.jsx
-│   │   └── Avatar.jsx
-│   ├── layout/
-│   │   ├── Navbar.jsx
-│   │   └── Sidebar.jsx
-│   └── posts/
-│       ├── PostCard.jsx
-│       └── PostForm.jsx
+│   │   ├── Card.jsx
+│   │   ├── CreateComment.jsx
+│   │   ├── CreatePost.jsx
+│   │   ├── GradientCircle.jsx
+│   │   ├── icon.jsx
+│   │   ├── InfoCard.jsx
+│   │   ├── LikesModal.jsx
+│   │   ├── LoadingScreen.jsx
+│   │   ├── MobileScreen.jsx
+│   │   ├── Post.jsx
+│   │   ├── PostSkeleton.jsx
+│   │   ├── StaticPost.jsx
+│   │   └── TopComment.jsx
+│   ├── footer/
+│   │   └── Footer.jsx
+│   └── navbar/
+│       └── AppNavbar.jsx
 │
-├── pages/                # Route-level pages
-│   ├── Home.jsx
-│   ├── Login.jsx
-│   ├── Register.jsx
-│   ├── Profile.jsx
-│   └── NotFound.jsx
+├── contexts/
+│   └── AuthContext.jsx
 │
-├── hooks/                # Custom React hooks
-│   ├── useAuth.js
-│   └── usePosts.js
+├── layouts/
+│   ├── AuthLayout.jsx
+│   └── MainLayout.jsx
 │
-├── schemas/              # Zod validation schemas
+├── pages/
+│   ├── auth/
+│   │   ├── Login.jsx
+│   │   └── Register.jsx
+│   ├── landing.jsx
+│   ├── home.jsx
+│   ├── error.jsx
+│   ├── notification.jsx
+│   ├── postDetails.jsx
+│   └── Profile.jsx
+│
+├── routes/
+│   ├── AppRouter.jsx
+│   ├── ProtectedAuthRoute.jsx
+│   └── ProtectedRoute.jsx
+│
+├── schemas/
 │   ├── loginSchema.js
 │   └── registerSchema.js
 │
-├── routes/               # Route definitions & guards
-│   ├── AppRouter.jsx
-│   └── ProtectedRoute.jsx
-│
-├── utils/
+├── utilities/
+│   └── dateFormatting.js
 │
 ├── App.jsx
 └── main.jsx
@@ -106,5 +149,5 @@ src/
 
 ---
 
-
-
+## Contributing
+Pull requests are welcome! Please open an issue first to discuss what you'd like to change.
