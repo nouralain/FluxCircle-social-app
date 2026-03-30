@@ -9,7 +9,6 @@ import { FaArrowLeft } from 'react-icons/fa'
 
 export default function PostDetails() {
     const { postId } = useParams()
-console.log(postId);
 const navigate = useNavigate()
 
     const {data , isLoading} = useQuery({

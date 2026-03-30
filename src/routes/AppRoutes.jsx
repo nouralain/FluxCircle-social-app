@@ -11,6 +11,7 @@ import ForgetPassword from './../pages/forgetPass/ForgetPassword';
 import Profile from './../pages/profile/Profile';
 import PostDetails from "../pages/postDetails/PostDetails";
 import Notification from './../pages/notification/Notification';
+import Suggestions from "../pages/suggestions/Suggestions";
 
 export const router = createBrowserRouter([
   {
@@ -53,5 +54,11 @@ export const router = createBrowserRouter([
         path: "posts/:postId",
         element: <ProtectedRoute><PostDetails /></ProtectedRoute>
       },
+      {
+        path: "suggestions",
+        element: <ProtectedRoute><Suggestions /></ProtectedRoute>
+      },
+      ,
+      
   ]}
 ])

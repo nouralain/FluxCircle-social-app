@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import AllComments from './AllComments';
 
 export default function TopComment({ topComment, postId ,commentsCount}) {
-  console.log(topComment);
 const [allComs , setAllComs]=useState(false)
   return (
  <>

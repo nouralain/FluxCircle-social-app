@@ -17,8 +17,6 @@ export default function Profile() {
     queryFn: profileData,
     select: (res) => res.data.data.user,
   });
-  console.log(data, isLoading);
-
   const { data: myPosts , isFetching:myPostFetching ,refetch:myPostRefetch } = useQuery({
     queryKey: ["my-posts"],
     queryFn: () => getMyPosts(data?.id),
@@ -27,8 +25,6 @@ export default function Profile() {
         staleTime: Infinity
 
   });
-  console.log(myPosts);
-
   const { data: mySavedPosts , isFetching,refetch } = useQuery({
     queryKey: ["my-saved-posts"],
     queryFn: getMySavedPosts,
@@ -36,7 +32,6 @@ export default function Profile() {
         staleTime: Infinity
 
   });
-  console.log(mySavedPosts);
 
   const profileState = [
     { label: "Followers", value: data?.followersCount ?? 0 },

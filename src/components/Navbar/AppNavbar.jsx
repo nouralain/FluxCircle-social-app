@@ -30,7 +30,7 @@ import { profileData } from "../../api/auth.api";
 export default function AppNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const userLocation = useLocation();
-  const { userToken } = useContext(authContext);
+  const { userToken , setUserToken } = useContext(authContext);
 
 const {data} = useQuery({
   queryKey:["profile-data"],
@@ -38,7 +38,10 @@ const {data} = useQuery({
   select: (res) => res.data.data.user,
   enabled: !!userToken
 })
-
+function handleLogOut(){
+  localStorage.removeItem("token")
+  setUserToken(null)
+}
   return (
     <>
       <Navbar
@@ -65,8 +68,8 @@ const {data} = useQuery({
 
         {/* TOGGLE BUTTON */}
         {!userToken && (
-          <NavbarContent className="md:hidden text-black" justify="end">
-            <NavbarMenuToggle
+          <NavbarContent className="md:hidden text-black " justify="end">
+            <NavbarMenuToggle className="hover:cursor-pointer"
               icon={
                 isMenuOpen ? (
                   <RxCross2 size={20} />
@@ -179,7 +182,7 @@ const {data} = useQuery({
                     Settings
                   </DropdownItem>
 
-                  <DropdownItem key="logout" color="danger">
+                  <DropdownItem key="logout" color="danger" onClick={()=>handleLogOut()}>
                     Log Out
                   </DropdownItem>
                 </DropdownMenu>

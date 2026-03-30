@@ -10,5 +10,5 @@ export function CommunityPosts() {
         staleTime: Infinity
 
   })
-  return <Post data={data} isFetching={isFetching} refetch={refetch} />
+  return <Post data={data} isFetching={!data && isFetching} refetch={refetch} />
 }
